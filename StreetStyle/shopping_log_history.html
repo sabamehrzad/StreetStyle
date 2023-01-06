@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Shopping Log
+{% endblock %}
+
+{% block main %}
+
+<h1 class="widehead" id="shopping-history">SHOPPING LOG</h1>
+
+    <table class="table table-striped" style="table-layout: fixed">
+
+        {% for entry in shopping_log_history %}
+            <tr>
+                <td class="imgCell">
+                    <img src={{entry.filepath}} class="scaleImg" height="100%">
+                </td>
+                <td class="imgCell">
+                    <b>Date:</b> {{ entry.date }}
+                    <br>
+                    <b>Clothing Type:</b> {{ entry.article }}
+                    <br>
+                    <b>Brand:</b> {{ entry.brand }}
+                    <br>
+                    {% if entry.link != "" %}
+                        <b>Link: </b><a href="{{ entry.link }}">Click for link</a>
+                    {% else %}
+                        <b>Link: </b>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

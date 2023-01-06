@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    My Data
+{% endblock %}
+
+{% block main %}
+
+<h1 class="widehead" id ="analytics">STATISTICS</h1>
+<p class="lead">Ever wondered about your fashion habits? Here, they are, revealed to your eyes!</p>
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script type="text/javascript">
+
+window.onload = function () {
+	let accessoryDict = {{ articleDict|tojson}};
+	let dateCount = {{ dateCount|tojson}};
+	let sortedBrands = {{ sortedBrands|tojson}};
+
+	// Initialize datasets
+	const accessoryData = [];
+	const brandData = [];
+	const dateData = [];
+
+	// Populate datasets
+	for (let i = 0; i < Object.keys(accessoryDict).length; i++) {
+		accessoryData.push({ label: Object.keys(accessoryDict)[i],  y: accessoryDict[Object.keys(accessoryDict)[i]]});
+	};
+
+	for (let i = 0; i < Object.keys(dateCount).length; i++) {
+		dateData.push({ label: Object.keys(dateCount)[i],  y: dateCount[Object.keys(dateCount)[i]]});
+	};
+
+	for (let i = 0; i < Object.keys(sortedBrands).length; i++) {
+		brandData.push({ label: sortedBrands[i + 1][0],  y: sortedBrands[i + 1][1]},);
+	};
+
+	CanvasJS.addColorSet("blueShades",
+				[//colorSet Array
+				"#005999",
+				"#056FBC",
+				"#0092FC",
+				"#3AACFF",
+				"#61BCFE"
+				]);
+
+	// Article Donut
+	var accessories = new CanvasJS.Chart("accessoryChart", {
+		colorSet: "blueShades",
+		title:{
+			text: "Most Worn Clothing Types",
+			fontFamily: "Verdana",
+		},
+		data: [
+		{
+			// Change type to "doughnut", "line", "splineArea", etc.
+			type: "doughnut",
+			indexLabelFontFamily: "Verdana",
+			dataPoints: accessoryData
+		}
+		]
+	});
+	accessories.render();
+
+	// Brand bar chart
+	var brands = new CanvasJS.Chart("brandChart", {
+		colorSet: "blueShades",
+		axisX:{
+			title:"Brands",
+			titleFontFamily: "Verdana",
+		},
+		axisY:{
+			title:"Number of articles logged",
+			titleFontFamily: "Verdana",
+			minimum: 0,
+			interval: 1,
+		},
+		title:{
+			text: "Top Brands Logged",
+			fontFamily: "Verdana",
+		},
+		data: [
+		{
+			type: "column",
+			dataPoints: brandData
+		}
+
+		]
+	});
+	brands.render();
+
+		// Date line graph
+		var dates = new CanvasJS.Chart("dateChart", {
+		colorSet: "blueShades",
+		axisY:{
+			title:"Number of shopping log posts",
+			titleFontFamily: "Verdana",
+			minimum: 0,
+			interval: 1,
+		},
+
+		title:{
+			text: "Shopping Log Frequency This Year",
+			fontFamily: "Verdana",
+		},
+		data: [
+		{
+			type: "splineArea",
+			dataPoints: dateData
+		}
+		]
+	});
+	dates.render();
+}
+
+</script>
+
+</head>
+
+<body>
+
+	<div id="accessoryChart" class="data-graph"></div>
+	<br>
+	<div id="brandChart" class="data-graph"></div>
+	<br>
+	<div id="dateChart" class="data-graph"></div>
+	<br>
+
+</body>
+</html>
+
+{% endblock %}
+
+

@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Shopping Log
+{% endblock %}
+
+{% block main %}
+
+<h1 class="widehead" id ="log">LOG CLOTHES</h1>
+<p class="lead">Log your clothing to help keep track of your favorite accessories and pieces.<p>
+
+    <form action="/shopping_log" method="POST" enctype="multipart/form-data">
+        <!-- Date -->
+        <h6>When was this purchased?</h6>
+        <div>
+            <input type="date" id="date" name="date" style="margin-bottom:15px">
+        </div>
+        <h6>Select a photo of the article (no spaces in its name)</h6>
+        <div>
+            <input type="file" name="image" id="image" style="margin-bottom:15px">
+        </div>
+
+        <!-- Choose clothing -->
+        <h6>What article of clothing is it?</h6>
+        <div>
+            <select class="form-select mx-auto w-auto" style="margin-bottom:15px" name="article">
+                <option disabled selected>Clothing Type</option>
+                <option value="Accessory">Accessory</option>
+                <option value="Hat">Hat</option>
+                <option value="Top">Top</option>
+                <option value="Bottom">Bottom</option>
+                <option value="Shoes">Shoes</option>
+            </select>
+        </div>
+
+        <!-- Type Brand -->
+        <h6>What brand is it?</h6>
+        <input type="text" name="brand" style="width: 800px; margin-bottom:10px" placeholder="Brand">
+
+        <!-- Insert Link -->
+        <h6>Include the link if purchased online</h6>
+        <input type="text" name="link" class="wide" style="width: 800px; margin-bottom:15px" placeholder="Item URL">
+
+        <!-- Submit button -->
+        <div>
+            <button class="btn btn-primary" type="submit">Submit shopping log</button>
+        </div>
+    </form>
+{% endblock %}

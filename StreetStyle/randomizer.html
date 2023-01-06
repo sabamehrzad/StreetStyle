@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Randomizer
+{% endblock %}
+
+
+
+{% block main %}
+
+    <script type="text/javascript">
+        // Get array of dictionaries for each article
+        let old_accessories = {{ accessories | tojson | safe }};
+        let accessories = JSON.parse(old_accessories);
+
+        let old_hats = {{ hats | tojson | safe }};
+        let hats = JSON.parse(old_hats);
+
+        let old_tops = {{ tops | tojson | safe }};
+        let tops = JSON.parse(old_tops);
+
+        let old_bottoms = {{ bottoms | tojson | safe }};
+        let bottoms = JSON.parse(old_bottoms);
+
+        let old_shoes = {{ shoes | tojson | safe }};
+        let shoes = JSON.parse(old_shoes);
+
+        // For the loops
+        const clothes = [accessories, hats, tops, bottoms, shoes];
+
+        const clothesIds  = {
+        0: ["accessoryimg", "accessorybrand"],
+        1: ["hatimg", "hatbrand"],
+        2: ["topimg", "topbrand"],
+        3: ["bottomimg", "bottombrand"],
+        4: ["shoeimg", "shoebrand"],
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.getElementById('randomize').addEventListener('click', function() {
+
+                // Go through each clothes type
+                for (let i = 0; i < clothes.length; i++) {
+
+                    index =  Math.floor(Math.random() * (clothes[i].length+1));
+                    filepath = "";
+                    brand = "";
+
+                    if (clothes[i].length < 1)
+                    {
+                        let item = {};
+                    }
+                    else {
+                        let item = clothes[i][index];
+                        document.getElementById(clothesIds[i][0]).src = item["filepath"];
+                        document.getElementById(clothesIds[i][1]).innerHTML = item["brand"];
+                    }
+
+                }
+
+                document.getElementById('accessoryimg').style.visibility = "visible";
+                document.getElementById('hatimg').style.visibility = "visible";
+                document.getElementById('topimg').style.visibility = "visible";
+                document.getElementById('bottomimg').style.visibility = "visible";
+                document.getElementById('shoeimg').style.visibility = "visible";
+
+            });
+        });
+    </script>
+
+    <h1 class="widehead" id="randomizer">RANDOMIZER</h1>
+
+        <table id="finaltable" class="table table-striped">
+
+            <tr>
+                <th class="cell">Accessory</th>
+                <th class="cell">Hat</th>
+                <th class="cell">Top</th>
+                <th class="cell">Bottom</th>
+                <th class="cell">Shoes</th>
+            </tr>
+            <tr>
+                <td class="imgCell"><img id="accessoryimg" style="visibility:hidden" src="/static/noImg.png" class="scaleImg randImg"></td>
+                <td class="imgCell"><img id="hatimg" style="visibility:hidden" src="/static/noImg.png" class="scaleImg randImg"></td>
+                <td class="imgCell"><img id="topimg" style="visibility:hidden" src="/static/noImg.png" class="scaleImg randImg"></td>
+                <td class="imgCell"><img id="bottomimg" style="visibility:hidden" src="/static/noImg.png" class="scaleImg randImg"></td>
+                <td class="imgCell"><img id="shoeimg" style="visibility:hidden" src="/static/noImg.png" class="scaleImg randImg"></td>
+            </tr>
+            <tr>
+                <td class="cell"><div id="accessorybrand"></div></td>
+                <td class="cell"><div id="hatbrand"></div></td>
+                <td class="cell"><div id="topbrand"></div></td>
+                <td class="cell"><div id="bottombrand"></div></td>
+                <td class="cell"><div id="shoebrand"></div></td>
+            </tr>
+        </table>
+
+        <button class="btn btn-primary" type="submit" id="randomize">Randomize</button>
+
+{% endblock %}

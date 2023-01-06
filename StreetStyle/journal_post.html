@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Journal Post
+{% endblock %}
+
+{% block main %}
+
+<h1 class="widehead" id="journal-post">WRITE</h1>
+<p class="left-text cleanmarg lead">Update your fashion journal with a new entry about anything and everything clothing-related. Write to your heart's content!!!</p>
+
+    <form action="/journal_post" method="post">
+
+        <!-- Date and Subject(STRINGS: YYYY-MM-DD)-->
+        <div class="form-group mb-3">
+            <div class="col-sm-2">
+                <input type="date" id="date" name="date" class="mb-3 small-box">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" id="subject" name="subject" class="small-box" placeholder="Subject">
+            </div>
+        </div>
+
+        <!-- Title  -->
+        <div class="form-group mb-3">
+            <input type="text" class="form-control left-text" id="title" name="title" placeholder="Title">
+        </div>
+
+        <!-- Journal entry  -->
+        <div class="form-group mb-3">
+            <textarea class="form-control" id="entry" name="entry" rows="10"></textarea>
+        </div>
+
+        <!-- Submit button -->
+        <button class="btn btn-primary" type="submit">Submit new post</button>
+
+    </form>
+{% endblock %}
